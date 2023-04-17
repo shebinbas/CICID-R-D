@@ -188,13 +188,13 @@ jobs:
          name: build-Android
          path: build/Android
 
-- name: Create ZIP archive
-  run: |
-    cd build
-    zip -r build.zip StandaloneWindows64
 
 deployWindows:
   needs: buildWindows
+  name: Create ZIP archive
+  run: |
+    cd build
+    zip -r build.zip StandaloneWindows64
   name: Deploy Windows build to branch
   runs-on: ubuntu-latest
   steps:
