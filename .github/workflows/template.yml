@@ -188,6 +188,34 @@ jobs:
          name: build-Android
          path: build/Android
 
+- name: Create ZIP archive
+  run: |
+    cd build
+    zip -r build.zip StandaloneWindows64
+
+deployWindows:
+  needs: buildWindows
+  name: Deploy Windows build to branch
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.ref }}
+    - name: Create branch
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git checkout -b windows-build
+    - name: Copy build files
+      run: |
+        cp build/build.zip .
+    - name: Commit and push changes
+      run: |
+        git add build.zip
+        git commit -m "Add Windows build"
+        git push --set-upstream origin windows-build
+
 
 #  deployPages:
 #    needs: buildWebGL
