@@ -102,7 +102,7 @@ jobs:
 #          path: build/WebGL
 #
  buildWindows:
-  needs: checkLicense
+  #  needs: testRunner
    name: Build for Windows 🖥️
    runs-on: ubuntu-latest
    strategy:
