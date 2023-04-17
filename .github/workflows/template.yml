@@ -5,14 +5,14 @@ on: push
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
-# jobs:
-#   checkLicense:
-#     name: Check for the Unity license ☑️
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Fail - No license ☠️
-#         if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
-#         run: exit 1
+jobs:
+  # checkLicense:
+  #   name: Check for the Unity license ☑️
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Fail - No license ☠️
+  #       if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
+  #       run: exit 1
 
  testRunner:
   #  needs: checkLicense
@@ -102,7 +102,6 @@ env:
 #          path: build/WebGL
 #
  buildWindows:
-  #  needs: testRunner
    name: Build for Windows 🖥️
    runs-on: ubuntu-latest
    strategy:
