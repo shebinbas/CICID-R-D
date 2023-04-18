@@ -45,9 +45,9 @@ jobs:
       ###########################
       #  Set Scripting Backend  #
       ###########################
-      - name: Set Scripting Backend To il2cpp
-        run: |
-          "./CICID-R-D/ProjectSettings/ProjectSettings.asset"
+      # - name: Set Scripting Backend To il2cpp
+      #   run: |
+      #     "./CICID-R-D/ProjectSettings/ProjectSettings.asset"
       ###########################
       #          Build          #
       ###########################
