@@ -16,6 +16,7 @@ jobs:
   #       run: exit 1
 
   buildWebGL:
+    needs: testRunner
     name: Build for WebGL 🖥️
     runs-on: ubuntu-latest
    
@@ -67,6 +68,7 @@ jobs:
 
 
   buildWindows:
+    needs: testRunner
     name: Build for Windows 🖥️
     runs-on: ubuntu-latest
    
@@ -117,6 +119,7 @@ jobs:
          path: build/StandaloneWindows64
 
   buildAndroid:
+    needs: testRunner
     name: Build for Android 🖥️
     runs-on: ubuntu-latest
    
