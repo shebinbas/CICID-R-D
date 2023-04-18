@@ -3,8 +3,8 @@ name: CI Demo 🎮
 on: push
 
 env:
-  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-
+  UNITY_SERIAL : ${{ secrets.UNITY_SERIAL }}	
+  
 jobs:
   # checkLicense:
   #   name: Check for the Unity license ☑️
