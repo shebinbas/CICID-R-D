@@ -2,7 +2,6 @@ name: GameCI Template 🎮
 
 on: push
 
-permissions: read-all|write-all
 
 env:
   UNITY_SERIAL : ${{ secrets.UNITY_SERIAL }}
