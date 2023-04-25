@@ -240,17 +240,36 @@ jobs:
           branch: webgl-deploy-page
           folder: build/WebGL
 
-    - name: Sonarscanner for dotnet
-    uses: Secbyte/dotnet-sonarscanner@v1.2
-    with:
-      buildCommand: dotnet build .
-      testCommand: dotnet test .
-      projectKey: shebinbas_CICID-R-D
-      projectName: CICID-R-D
-      sonarOrganisation: shebinbas
-      beginArguments: /d:sonar.verbose="true" /d:sonar.cs.opencover.reportsPaths="/path/to/coverage.xml" /d:sonar.coverage.exclusions="**/*.cs"
+
+
+name: SonarCloud
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    name: Build and analyze
+    runs-on: windows-latest
     env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Sonarscanner for dotnet
+        uses: Secbyte/dotnet-sonarscanner@v1.2
+        with:
+          buildCommand: dotnet build .
+          testCommand: dotnet test .
+          projectKey: a-project-key
+          projectName: a-project-name
+          sonarOrganisation: an-org
+          beginArguments: /d:sonar.verbose="true" /d:sonar.cs.opencover.reportsPaths="/path/to/coverage.xml" /d:sonar.coverage.exclusions="**/*.cs"
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       
