@@ -106,7 +106,7 @@ jobs:
             Library-
             
       - name: Sonarscanner for dotnet
-        uses: Secbyte/dotnet-sonarscanner@v1.2
+        uses: Secbyte/dotnet-sonarscanner@v2.3
         with:
           buildCommand: dotnet build .
           testCommand: dotnet test .
