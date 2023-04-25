@@ -76,6 +76,7 @@ jobs:
           
     steps:
 
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -106,8 +107,6 @@ jobs:
             
       - name: Sonarscanner for dotnet
         uses: Secbyte/dotnet-sonarscanner@v1.2
-      - name: unity-sonarscanner
-        uses: MirageNet/unity-sonarscanner@1.0.1
         with:
           buildCommand: dotnet build .
           testCommand: dotnet test .
