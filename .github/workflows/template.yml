@@ -240,7 +240,6 @@ jobs:
           branch: webgl-deploy-page
           folder: build/WebGL
 
-  SonarScan:
     - name: Sonarscanner for dotnet
     uses: Secbyte/dotnet-sonarscanner@v1.2
     with:
