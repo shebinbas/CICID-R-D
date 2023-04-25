@@ -112,7 +112,7 @@ jobs:
           testCommand: dotnet test .
           projectKey: shebinbas_CICID-R-D
           projectName: CICID-R-D
-          sonarOrganisation: an-org
+          sonarOrganisation: shebinbas
           beginArguments: /d:sonar.verbose="true" /d:sonar.cs.opencover.reportsPaths="/path/to/coverage.xml" /d:sonar.coverage.exclusions="**/*.cs"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
