@@ -69,7 +69,6 @@ jobs:
 
 
   buildWindows:
-    needs: testRunner
     name: Build for Windows 🖥️
     runs-on: ubuntu-latest
    
