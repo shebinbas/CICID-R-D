@@ -253,6 +253,11 @@ jobs:
           branch: webgl-deploy-page
           folder: build/WebGL
 
+  deployAndroid:
+    needs: buildAndroid
+    name: Publish to Play Store 🚀
+    runs-on: ubuntu-latest
+
 
 
       
