@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="Summary">
+  <Summary>
+    <Generatedon>26-04-2023 - 12:25:14</Generatedon>
+    <Parser>OpenCoverParser</Parser>
+    <Assemblies>3</Assemblies>
+    <Classes>5</Classes>
+    <Files>3</Files>
+    <Coveredlines>8</Coveredlines>
+    <Uncoveredlines>116</Uncoveredlines>
+    <Coverablelines>124</Coverablelines>
+    <Totallines>348</Totallines>
+    <Linecoverage>6.4</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>0</Totalbranches>
+  </Summary>
+  <Coverage>
+    <Assembly name="Assembly-CSharp" classes="2" coverage="0" coveredlines="0" coverablelines="13" totallines="104" branchcoverage="" coveredbranches="0" totalbranches="0">
+      <Class name="InternetChecker" coverage="0" coveredlines="0" coverablelines="6" totallines="52" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="TestAnim" coverage="0" coveredlines="0" coverablelines="7" totallines="52" branchcoverage="" coveredbranches="0" totalbranches="0" />
+    </Assembly>
+    <Assembly name="Assembly-CSharp-Editor" classes="1" coverage="0" coveredlines="0" coverablelines="97" totallines="242" branchcoverage="" coveredbranches="0" totalbranches="0">
+      <Class name="ReadmeEditor" coverage="0" coveredlines="0" coverablelines="97" totallines="242" branchcoverage="" coveredbranches="0" totalbranches="0" />
+    </Assembly>
+    <Assembly name="Tests" classes="2" coverage="57.1" coveredlines="8" coverablelines="14" totallines="108" branchcoverage="" coveredbranches="0" totalbranches="0">
+      <Class name="InternetChecker" coverage="66.6" coveredlines="4" coverablelines="6" totallines="54" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="InternetTest" coverage="50" coveredlines="4" coverablelines="8" totallines="54" branchcoverage="" coveredbranches="0" totalbranches="0" />
+    </Assembly>
+  </Coverage>
+</CoverageReport>
