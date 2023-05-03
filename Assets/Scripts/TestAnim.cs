@@ -19,7 +19,7 @@ public class TestAnim : MonoBehaviour
         }
         else
         {
-            Debug.Log("Internet connection is not available.");
+
         }
     }
 
