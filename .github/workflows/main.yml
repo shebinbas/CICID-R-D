@@ -66,7 +66,6 @@ jobs:
           path: build/WebGL
 
   buildWindows:
-    needs: buildWebGL
     name: Build for Windows
     runs-on: ubuntu-latest
 
@@ -114,6 +113,6 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: build-Windows
-          path: build/Windows
+          name: build-StandaloneWindows64
+          path: build/StandaloneWindows64
 
