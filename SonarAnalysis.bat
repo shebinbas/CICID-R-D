@@ -1,9 +1,9 @@
 @echo on
 SET var=%cd%
 cd %SONAR_SCANNER_INSTALLATION%
-SonarScanner.MSBuild.exe begin /k:"CharacterBuilder" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="sqp_a584c6f4a99232a9f40959f00ac479a5fcbbf41d"
+SonarScanner.MSBuild.exe begin /k:"CICD-R-D" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="sqp_a1d5be418df3533e83614f3107e85c5b6fee0803"
 cd var
-MSBuild "%var%\unity-characterbuilder.sln" /t:Rebuild
+MSBuild "%var%\CICID-R-D.sln" /t:Build
 cd %SONAR_SCANNER_INSTALLATION%
-SonarScanner.MSBuild.exe end  /d:sonar.login="sqp_a584c6f4a99232a9f40959f00ac479a5fcbbf41d"
+SonarScanner.MSBuild.exe end  /d:sonar.login="sqp_a1d5be418df3533e83614f3107e85c5b6fee0803"
 pause
