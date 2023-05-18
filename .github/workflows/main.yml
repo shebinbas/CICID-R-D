@@ -1,28 +1,68 @@
-name: MetaGP-Metaverse CI
+name: GameCI Template 🎮
 
 on: push
 
 env:
-  UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
 jobs:
-  checkLicense:
-    name: Check for the Unity license
+  testRunner:
+    name: Test in ${{ matrix.testMode }} ✨
     runs-on: ubuntu-latest
-    steps:
-      - name: Fail - No license
-        if: ${{ !startsWith(env.UNITY_SERIAL, 'S') }}
-        run: exit 1
-
-
-
-  buildWebGL:
-    name: Build for WebGL
-    runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
+      matrix:
+        testMode:
+          - EditMode
+          - PlayMode
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v2
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+
+      - name: Restore Library cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-test-project-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-test-project-
+            Library-
+
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v2
+        id: testRunner
+        with:
+          testMode: ${{ matrix.testMode }}
+          checkName: ${{ matrix.testMode }} test results
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Test results (${{ matrix.testMode }})
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
+
+  buildWebGL:
+    needs: testRunner
+    name: Build for WebGL 🖥️
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -56,123 +96,17 @@ jobs:
         with:
           targetPlatform: WebGL
 
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-
       - uses: actions/upload-artifact@v2
         with:
           name: build-WebGL
           path: build/WebGL
 
-  buildiOS:
-    name: Build for iOS
+  buildWindows:
+    needs: testRunner
+    name: Build for Windows 🖥️
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-      - name: Restore LFS cache
-        uses: actions/cache@v2
-        id: lfs-cache
-        with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-
-      - name: Git LFS Pull
-        run: |
-          git lfs pull
-          git add .
-          git reset --hard
-
-      - name: Restore Library cache
-        uses: actions/cache@v2
-        with:
-          path: Library
-          key: Library-build-iOS
-          restore-keys: |
-            Library-build-
-            Library-
-
-      - uses: game-ci/unity-builder@v2
-        with:
-          targetPlatform: iOS
-
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: build-iOS
-          path: build/iOS
-
-  buildAndroid:
-    name: Build for Android
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-      - name: Restore LFS cache
-        uses: actions/cache@v2
-        id: lfs-cache
-        with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-
-      - name: Git LFS Pull
-        run: |
-          git lfs pull
-          git add .
-          git reset --hard
-
-      - name: Restore Library cache
-        uses: actions/cache@v2
-        with:
-          path: Library
-          key: Library-build-Android
-          restore-keys: |
-            Library-build-
-            Library-
-
-      - uses: game-ci/unity-builder@v2
-        with:
-          targetPlatform: Android
-
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: build-Android
-          path: build/Android
-
-  buildStandaloneWindows64:
-    name: Build for StandaloneWindows64
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -206,23 +140,17 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
 
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-
       - uses: actions/upload-artifact@v2
         with:
           name: build-StandaloneWindows64
           path: build/StandaloneWindows64
 
-  buildStandaloneOSX:
-    name: Build for StandaloneOSX
+  buildAndroid:
+    needs: testRunner
+    name: Build for Android 📱
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -247,21 +175,36 @@ jobs:
         uses: actions/cache@v2
         with:
           path: Library
-          key: Library-build-StandaloneOSX
+          key: Library-build-Android
           restore-keys: |
             Library-build-
             Library-
 
       - uses: game-ci/unity-builder@v2
         with:
-          targetPlatform: StandaloneOSX
-
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          targetPlatform: Android
 
       - uses: actions/upload-artifact@v2
         with:
-          name: build-StandaloneOSX
-          path: build/StandaloneOSX
+          name: build-Android
+          path: build/Android
+
+
+  deployPages:
+    needs: buildWebGL
+    name: Deploy to Github Pages 🚀
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: build-WebGL
+          path: build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: build/WebGL
