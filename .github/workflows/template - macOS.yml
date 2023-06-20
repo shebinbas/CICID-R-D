@@ -102,7 +102,7 @@ jobs:
           path: build/iOS
 
   buildWithWebGL:
-    name: Build for iOS
+    name: Build for WebGL
     runs-on: ubuntu-latest
     outputs:
       buildVersion: ${{ steps.build.outputs.buildVersion }}
