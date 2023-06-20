@@ -1,7 +1,9 @@
-name: GameCI Template 🎮
+name: MetaGP-Metaverse CI
 
-on: push
-
+on:
+  push:
+    branches:
+      - QA
 env:
   UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
 
